@@ -7,6 +7,6 @@ export function middlewareMetricsInc(
   next: NextFunction,
 ) {
   // Increment the counter for the number of hits to the file server
-  config.fileserverHits++;
+  config.api.fileserverHits++;
   next();
 }
