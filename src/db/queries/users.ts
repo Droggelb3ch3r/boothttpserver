@@ -20,3 +20,24 @@ export async function getUserByEmail(mail: string) {
     .execute();
   return user;
 }
+
+export async function updateUser(
+  userId: string,
+  updatedFields: Partial<NewUser>,
+) {
+  const [updatedUser] = await db
+    .update(users)
+    .set(updatedFields)
+    .where(eq(users.id, userId))
+    .returning();
+  return updatedUser;
+}
+
+export async function upgradeIsChirpyRedUser(userId: string) {
+  const [updateUser] = await db
+    .update(users)
+    .set({ isChirpyRed: true })
+    .where(eq(users.id, userId))
+    .returning();
+  return updateUser;
+}

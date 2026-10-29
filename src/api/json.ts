@@ -9,3 +9,8 @@ export function respondWithJSON(res: Response, code: number, payload: any) {
   const body = JSON.stringify(payload);
   res.status(code).send(body);
 }
+
+export function respondeWithoutContent(res: Response, code: number) {
+  res.header("Content-Type", "application/json");
+  res.status(code).send();
+}

@@ -5,15 +5,21 @@ import { errorHandler } from "./api/middleware/errorhandle.js";
 import { handlerReadiness } from "./api/readiness.js";
 import { handlerRequestcount } from "./api/metrics.js";
 import { handlerReset } from "./api/reset.js";
-import { handlerCreateUser } from "./api/users.js";
+import { handlerCreateUser, handlerUpdateUser } from "./api/users.js";
 import { handlerLogin } from "./api/login.js";
 import {
   handlerCreateChirp,
+  handlerDeleteChirp,
   handlerGetChirps,
   handlerGetChirpsByChirpId,
 } from "./api/chirps.js";
+import {
+  handlerRefreshToken,
+  handlerRevokeRefreshToken,
+} from "./api/refresh.js";
 import { config } from "./config.js";
 import { runMigration } from "./db/migrate.js";
+import { handlerUpdateToChirpyRed } from "./api/chirpyred.js";
 
 const app: Express = express();
 const PORT = config.api.port;
@@ -49,11 +55,28 @@ function main() {
   app.post("/api/chirps", (req, res, next) => {
     Promise.resolve(handlerCreateChirp(req, res)).catch(next);
   });
+  app.post("/api/refresh", (req, res, next) => {
+    Promise.resolve(handlerRefreshToken(req, res)).catch(next);
+  });
+  app.post("/api/revoke", (req, res, next) => {
+    Promise.resolve(handlerRevokeRefreshToken(req, res)).catch(next);
+  });
+  app.post("/api/polka/webhooks", (req, res, next) => {
+    Promise.resolve(handlerUpdateToChirpyRed(req, res)).catch(next);
+  });
+
+  app.put("/api/users", (req, res, next) => {
+    Promise.resolve(handlerUpdateUser(req, res)).catch(next);
+  });
+
+  app.delete("/api/chirps/:chirpId", (req, res, next) => {
+    Promise.resolve(handlerDeleteChirp(req, res)).catch(next);
+  });
 
   app.use(errorHandler);
 
   app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}/app`);
+    console.log(`Server is running on http://localhost:${PORT}`);
   });
 }
 await runMigration();

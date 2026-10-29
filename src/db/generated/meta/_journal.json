@@ -22,6 +22,27 @@
       "when": 1792089000663,
       "tag": "0002_zippy_puma",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1792833486404,
+      "tag": "0003_typical_gateway",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1792835000679,
+      "tag": "0004_yellow_grim_reaper",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1793295910476,
+      "tag": "0005_remarkable_tony_stark",
+      "breakpoints": true
     }
   ]
 }
